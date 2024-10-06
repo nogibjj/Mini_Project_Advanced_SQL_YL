@@ -1,7 +1,22 @@
-def exp_fun(x, y):
-    return x**y
+"""
+ETL-Query script
+"""
 
+from mylib.extract import extract
+from mylib.transform_load import load
+from mylib.query import read, create, update, delete
 
-x1 = 2 ; y1 = 2
-ans = exp_fun(x1, y1)
-print(f"The result of {x1} to the power of {y1} is {ans}")
+# Extract
+print("Extracting data...")
+extract()
+
+# Transform and load
+print("Transforming data...")
+load()
+
+# Query
+print("Querying data...")
+read()
+create()
+update()
+delete()
