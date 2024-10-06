@@ -31,18 +31,18 @@ The project is organized as follows:
 
   ```bash
   tree -L 2
+  ```
 
 ## Purpose of the project
-This project aims to create a basic ETL pipeline by connecting to SQLite and performing simple SQL queries on a fivethirtyeight data on alcohol consumptions across countries ([E] Extract a dataset from URL, [T] Transform, [L] Load into SQLite Database and [Q] Query For the ETL-Query lab)
-![alt text](image.png)
-
+This project aims to create a basic ETL pipeline by connecting to SQLite and performing simple SQL queries on a fivethirtyeight data on alcohol consumptions across countries !
+([E] Extract a dataset from URL, [T] Transform, [L] Load into SQLite Database and [Q] Query For the ETL-Query lab)
+[alt text](image.png)
 
 [E] Extract: extract a csv file from url and create file (data.csv) in local directory
-![alt text](image-1.png)
 ![alt text](image-8.png)
+
 [T] Transform and [L] Load: Transform the csv file into a db file and connect to SQLite
-![alt text](image-9.png)
-![alt text](image-2.png)
+![alt text](image-1.png)
 
 [Q] Query: Perform CRUD (Create, Read, Update and Delete) operations
 Read - reading and printing each of the rows in the dataset
