@@ -18,7 +18,9 @@ def load(dataset="data/drinks.csv"):
     c = conn.cursor()
     c.execute("DROP TABLE IF EXISTS drink")
     c.execute(
-        "CREATE TABLE drink (country, beer_servings, spirit_serving, wine_servings, total_litres_of_pure_alcohol)"
+        """
+        CREATE TABLE drink (country, beer_servings,
+        spirit_serving, wine_servings, total_litres_of_pure_alcohol)"""
     )
     # insert
     c.executemany("INSERT INTO drink VALUES (?, ?, ?, ?, ?)", payload)
