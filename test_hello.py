@@ -15,15 +15,37 @@ def test_extract():
 
 
 def test_load():
-    load_dotenv()
+    load_dotenv()  # Load environment variables from .env
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("mydbtoken")
     http_path = os.getenv("sql_http")
+
+    # Debugging: Check if variables are loaded correctly
+    print(f"Server Host: {server_h}")
+    print(f"Access Token: {access_token}")
+    print(f"HTTP Path: {http_path}")
+
+    if not server_h or not access_token or not http_path:
+        raise ValueError(
+            "Environment variables for Databricks connection are not set properly."
+        )
+
+    # Proceed to establish the connection
     with sql.connect(
         server_hostname=server_h,
         http_path=http_path,
         access_token=access_token,
     ) as connection:
+        # def test_load():
+        #     load_dotenv()
+        #     server_h = os.getenv("sql_server_host")
+        #     access_token = os.getenv("mydbtoken")
+        #     http_path = os.getenv("sql_http")
+        #     with sql.connect(
+        #         server_hostname=server_h,
+        #         http_path=http_path,
+        #         access_token=access_token,
+        #     ) as connection:
         c = connection.cursor()
         c.execute("SHOW TABLES FROM default LIKE 'yirang*'")
         result1 = c.fetchall()
