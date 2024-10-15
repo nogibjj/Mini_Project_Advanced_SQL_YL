@@ -54,4 +54,5 @@ The project is organized as follows:
 - setup.sh`
 - test_hello.py`
 
-
+```bash
+python Mini_Project_Advanced_SQL_YL

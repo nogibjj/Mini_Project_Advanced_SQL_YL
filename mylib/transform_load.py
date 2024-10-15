@@ -11,8 +11,8 @@ import pandas as pd
 # load the csv file and insert into a new sqlite3 database
 def load(dataset="data/drinks.csv", dataset2="data/countries.csv"):
     """Transforms and loads data from Databricks database from API"""
-    df = pd.read_csv(dataset, delimiter=",", skiprows=1)
-    df2 = pd.read_csv(dataset2, delimiter=",", skiprows=1)
+    # df = pd.read_csv(dataset, delimiter=",", skiprows=1)
+    # df2 = pd.read_csv(dataset2, delimiter=",", skiprows=1)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("mydbtoken")
@@ -24,7 +24,7 @@ def load(dataset="data/drinks.csv", dataset2="data/countries.csv"):
     ) as connection:
         c = connection.cursor()
         c.execute("SHOW TABLES FROM default LIKE 'yirang*'")
-        result = c.fetchall()
+        # result = c.fetchall()
         c.execute(
             """
             CREATE TABLE IF NOT EXISTS yirang_drink 

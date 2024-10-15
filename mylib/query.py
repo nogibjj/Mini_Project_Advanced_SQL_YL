@@ -1,10 +1,8 @@
-"""Query the database"""
-
-"""Query the database"""
-
 import os
 from databricks import sql
 from dotenv import load_dotenv
+
+"""Query the database"""
 
 
 def query():
