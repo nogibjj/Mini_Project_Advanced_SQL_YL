@@ -15,20 +15,37 @@ def test_extract():
 
 
 def test_load():
-    load_dotenv()  # Load environment variables from .env
+    # Step 1: Load environment variables from .env
+    load_dotenv()
+
+    # Step 2: Get the environment variables
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("mydbtoken")
     http_path = os.getenv("sql_http")
 
-    # Debugging: Check if variables are loaded correctly
+    # Step 4: Handle None values gracefully by checking the variables
+    if not server_h:
+        raise ValueError(
+            "Environment variable 'sql_server_host' is not set or is empty."
+        )
+    if not access_token:
+        raise ValueError("Environment variable 'mydbtoken' is not set or is empty.")
+    if not http_path:
+        raise ValueError("Environment variable 'sql_http' is not set or is empty.")
+
+    # Optional: Print for debugging to verify that variables are set correctly
     print(f"Server Host: {server_h}")
     print(f"Access Token: {access_token}")
     print(f"HTTP Path: {http_path}")
 
-    if not server_h or not access_token or not http_path:
-        raise ValueError(
-            "Environment variables for Databricks connection are not set properly."
-        )
+    # Step 3: Proceed to establish the connection with Databricks SQL
+    with sql.connect(
+        server_hostname=server_h,
+        http_path=http_path,
+        access_token=access_token,
+    ) as connection:
+        # Perform your SQL operations
+        print("Connection successful!")
 
     # Proceed to establish the connection
     with sql.connect(
