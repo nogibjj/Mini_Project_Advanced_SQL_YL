@@ -56,4 +56,7 @@ The project is organized as follows:
 
 ```bash
 python Mini_Project_Advanced_SQL_YL
+```
 
+## Complex SQL Query:
+![alt text](image.png)
