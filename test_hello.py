@@ -1,42 +1,51 @@
 """
 Test goes here
-
 """
 
+import os
+from databricks import sql
+from dotenv import load_dotenv
 from mylib.extract import extract
-from mylib.transform_load import load
-from mylib.query import read, create, update, delete
+from mylib.query import query
 
 
 def test_extract():
-    assert extract() == "data/drinks.csv"
+    result = extract()
+    assert result is not None, "Failed to extract the database"
 
 
-def test_transform():
-    assert load() == "drink.db"
+def test_load():
+    load_dotenv()
+    server_h = os.getenv("sql_server_host")
+    access_token = os.getenv("mydbtoken")
+    http_path = os.getenv("sql_http")
+    with sql.connect(
+        server_hostname=server_h,
+        http_path=http_path,
+        access_token=access_token,
+    ) as connection:
+        c = connection.cursor()
+        c.execute("SHOW TABLES FROM default LIKE 'yirang*'")
+        result1 = c.fetchall()
+        c.execute("SELECT * FROM yirang_drink")
+        result2 = c.fetchall()
+        c.execute("SHOW TABLES FROM default LIKE 'yirang*'")
+        result3 = c.fetchall()
+        c.execute("SELECT * FROM yirang_countries")
+        result4 = c.fetchall()
+        c.close()
+    assert result1 is not None
+    assert result2 is not None
+    assert result3 is not None
+    assert result4 is not None
 
 
-def test_create():
-    assert create() == "Sucessfully created!"
-
-
-def test_read():
-    assert read() == "Successfully read!"
-
-
-def test_update():
-    assert update() == "Successfully updated!"
-
-
-def test_delete():
-    assert delete() == "Sucessfully deleted!"
+def test_query():
+    result = query()
+    assert result is not None, "Failed to query the database"
 
 
 if __name__ == "__main__":
     test_extract()
-    test_transform()
-    test_create()
-    test_read()
-    test_update()
-    test_delete()
-    print("Everything passed")
+    test_load()
+    test_query()

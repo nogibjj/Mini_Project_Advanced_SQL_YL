@@ -1,50 +1,60 @@
 """Query the database"""
 
-import sqlite3
+"""Query the database"""
+
+import os
+from databricks import sql
+from dotenv import load_dotenv
 
 
-def read():
-    """Read and print the database for all the rows of the drink table"""
-    conn = sqlite3.connect("data/drink.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM drink")
-    print(cursor.fetchall())
-    conn.close()
-    return "Successfully read!"
-
-
-def create():
-    """Create a fake data"""
-    conn = sqlite3.connect("data/drink.db")
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO drink VALUES ('Kong Hong SAR','10','10','10','10')")
-    conn.commit()
-    conn.close()
-    return "Sucessfully created!"
-
-
-def update():
-    """Update China's beer_servings to be 80"""
-    conn = sqlite3.connect("data/drink.db")
-    cursor = conn.cursor()
-    cursor.execute("UPDATE drink SET beer_servings = '80' WHERE country = 'China';")
-    conn.commit()
-    conn.close()
-    return "Successfully updated!"
-
-
-def delete():
-    """Delete rows that year is equal to 2000"""
-    conn = sqlite3.connect("data/drink.db")
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM drink WHERE country = 'North Korea';")
-    conn.commit()
-    conn.close()
-    return "Sucessfully deleted!"
+def query():
+    """connections to Databricks database and execute a complex query
+    that contains joins, aggregation, and sorting"""
+    load_dotenv()
+    server_h = os.getenv("sql_server_host")
+    access_token = os.getenv("mydbtoken")
+    http_path = os.getenv("sql_http")
+    with sql.connect(
+        server_hostname=server_h,
+        http_path=http_path,
+        access_token=access_token,
+    ) as connection:
+        c = connection.cursor()
+        try:
+            c.execute("ALTER TABLE yirang_drink ADD COLUMN beer_percentage FLOAT")
+            print("Column 'beer_percentage' added to yirang_drink table.")
+        except Exception as e:
+            if "FIELDS_ALREADY_EXISTS" in str(e):
+                print("Column 'beer_percentage' already exists in yirang_drink table.")
+            else:
+                raise
+        c.execute(
+            """
+            UPDATE yirang_drink
+            SET beer_percentage = 
+            (beer_servings / (beer_servings + wine_servings + spirit_servings)) * 100
+            WHERE (beer_servings + wine_servings + spirit_servings) > 0
+        """
+        )
+        result = c.execute(
+            """
+            SELECT
+                C.continent,
+                SUM(D.beer_servings) AS total_beer_servings,
+                AVG(D.beer_percentage) AS avg_beer_percentage
+            FROM
+                yirang_drink D
+            JOIN
+                yirang_countries C ON D.country = C.country
+            GROUP BY
+                C.continent
+            ORDER BY
+                avg_beer_percentage DESC
+        """
+        ).fetchall()
+        c.close()
+    return result
 
 
 if __name__ == "__main__":
-    read()
-    create()
-    update()
-    delete()
+    query()
