@@ -5,7 +5,6 @@ connect to Databricks and create queries
 import os
 from databricks import sql
 from dotenv import load_dotenv
-import pandas as pd
 
 
 # load the csv file and insert into a new sqlite3 database
