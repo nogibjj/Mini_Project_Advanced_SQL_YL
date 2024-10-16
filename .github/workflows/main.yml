@@ -19,7 +19,7 @@ jobs:
           echo "LOOK AT ME LOOK AT ME WARNINGS ARE HERE"
           echo "::add-mask::${{ secrets.SQL_SERVER_HOST }}"
           echo "::add-mask::${{ secrets.MYDBTOKEN }}"
-          echo "::add-mask::${{ secrets.SQL_HTTP }}"
+          echo "::add-mask::${{ secrets.SQL_HTTP }}" 
       - name: install packages
         run: make install
       - name: lint
