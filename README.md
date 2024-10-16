@@ -1,5 +1,4 @@
-[![CI](https://github.com/nogibjj/Mini_Project_4_Yirang_Liu/actions/workflows/main.yml/badge.svg)](https://github.com/nogibjj/Mini_Project_4_Yirang_Liu/actions/workflows/main.yml)
-
+[![CI](https://github.com/nogibjj/Mini_Project_Advanced_SQL_YL/actions/workflows/main.yml/badge.svg)](https://github.com/nogibjj/Mini_Project_Advanced_SQL_YL/actions/workflows/main.yml)
 
 # 706-DE-Mini_Project_Advanced_SQL_YL
 
