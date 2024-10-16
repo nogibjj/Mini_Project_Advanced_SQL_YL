@@ -16,6 +16,7 @@ jobs:
           echo "sql_server_host=${{ secrets.sql_server_host }}" >> $GITHUB_ENV
           echo "sql_http=${{ secrets.sql_http }}" >> $GITHUB_ENV
           echo "mydbtoken=${{ secrets.mydbtoken }}" >> $GITHUB_ENV
+          echo "LOOK AT ME LOOK AT ME WARNINGS ARE HERE"
           echo "::add-mask::${{ secrets.SQL_SERVER_HOST }}"
           echo "::add-mask::${{ secrets.MYDBTOKEN }}"
           echo "::add-mask::${{ secrets.SQL_HTTP }}"
