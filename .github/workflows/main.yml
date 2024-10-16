@@ -22,9 +22,9 @@ jobs:
         run: make lint
       - name: test
         env: 
-            MYDBTOKEN: ${{ secrets.MYDBTOKEN }}
-            SQL_SERVER_HOST: ${{ secrets.SQL_SERVER_HOST }}
-            SQL_HTTP: ${{ secrets.SQL_HTTP }}
+            mydbtoken=: ${{ secrets.MYDBTOKEN }}
+            sql_server_host: ${{ secrets.SQL_SERVER_HOST }}
+            sql_http: ${{ secrets.SQL_HTTP }}
         run: make test
       - name: format
         run: make format
