@@ -16,15 +16,14 @@ jobs:
           echo "sql_server_host=${{ secrets.sql_server_host }}" >> $GITHUB_ENV
           echo "sql_http=${{ secrets.sql_http }}" >> $GITHUB_ENV
           echo "mydbtoken=${{ secrets.mydbtoken }}" >> $GITHUB_ENV
+          echo "::add-mask::${{ secrets.SQL_SERVER_HOST }}"
+          echo "::add-mask::${{ secrets.MYDBTOKEN }}"
+          echo "::add-mask::${{ secrets.SQL_HTTP }}"
       - name: install packages
         run: make install
       - name: lint
         run: make lint
       - name: test
-        env: 
-            mydbtoken=: ${{ secrets.MYDBTOKEN }}
-            sql_server_host: ${{ secrets.SQL_SERVER_HOST }}
-            sql_http: ${{ secrets.SQL_HTTP }}
         run: make test
       - name: format
         run: make format
